@@ -6,7 +6,7 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {MatTableModule} from '@angular/material/table';
 import {MatIcon} from "@angular/material/icon";
 import {TableExpandableRowsExample} from "./table/table.component";
-
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -22,7 +22,8 @@ import {TableExpandableRowsExample} from "./table/table.component";
     MatToolbar,
     MatTableModule,
     MatIcon,
-    TableExpandableRowsExample
+    TableExpandableRowsExample,
+    MatCardModule
   ]
 })
 export class TarefasModule { }

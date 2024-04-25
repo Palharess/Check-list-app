@@ -4,6 +4,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {Individual} from "../model/individual";
+import {MatToolbar} from "@angular/material/toolbar";
+
+
 
 /**
  * @title Table with expandable rows
@@ -20,7 +23,7 @@ import {Individual} from "../model/individual";
     ]),
   ],
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, MatToolbar],
 })
 export class TableExpandableRowsExample {
 
