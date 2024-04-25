@@ -1,0 +1,53 @@
+
+
+.main{
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+
+}
+
+
+
+mat-card{
+  background-color: whitesmoke;
+  width: 40%;
+  margin: auto;
+
+}
+
+h1{
+  font-size: 2.3rem;
+  margin: auto;
+  margin-top: 1.5rem;
+}
+
+mat-form-field{
+  width: 100%;
+}
+
+.types{
+  margin: auto;
+  margin-top: 1.5rem;
+  width: 80%;
+}
+
+.b-div{
+  margin: auto;
+  margin-bottom: 1.5rem;
+
+}
+
+
+.mat-mdc-unelevated-button {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 1.5rem;
+  height: 3.6rem;
+  font-size: 1.5rem;
+}
+
+
+
