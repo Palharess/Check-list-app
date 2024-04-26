@@ -23,7 +23,7 @@ import {MatCardModule} from '@angular/material/card';
     MatTableModule,
     MatIcon,
     TableExpandableRowsExample,
-    MatCardModule
+    MatCardModule,
   ]
 })
 export class TarefasModule { }

@@ -5,6 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {Individual} from "../model/individual";
 import {MatToolbar} from "@angular/material/toolbar";
+import {TarefasService} from "../services/tarefas.service";
 
 
 
@@ -26,30 +27,17 @@ import {MatToolbar} from "@angular/material/toolbar";
   imports: [MatTableModule, MatButtonModule, MatIconModule, MatToolbar],
 })
 export class TableExpandableRowsExample {
+  dataSource:Individual[] = [];
+  constructor(private tarefasService: TarefasService){
 
-  dataSource = ELEMENT_DATA;
+
+    this.dataSource = this.tarefasService.list();
+  }
   columnsToDisplay = ['titulo', 'data', 'tempo'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Individual | null = null;
 }
 
 
-const ELEMENT_DATA: Individual[] = [
-  {
-    _id: 1,
-    titulo: 'Hydrogen',
-    tempo: "tenpo",
-    data: 'H',
-    desc: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
-  },
-  {
-    _id: 1,
-    titulo: 'Hydrogen',
-    tempo: "tenpo",
-    data: 'H',
-    desc: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
-  }
 
-];
+
