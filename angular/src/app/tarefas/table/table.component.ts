@@ -6,6 +6,7 @@ import {MatTableModule} from '@angular/material/table';
 import {Individual} from "../model/individual";
 import {MatToolbar} from "@angular/material/toolbar";
 import {TarefasService} from "../services/tarefas.service";
+import {Observable} from "rxjs";
 
 
 
@@ -27,7 +28,7 @@ import {TarefasService} from "../services/tarefas.service";
   imports: [MatTableModule, MatButtonModule, MatIconModule, MatToolbar],
 })
 export class TableExpandableRowsExample {
-  dataSource:Individual[] = [];
+  dataSource:Observable<Individual[]>;
   constructor(private tarefasService: TarefasService){
 
 

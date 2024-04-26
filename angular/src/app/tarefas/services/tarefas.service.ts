@@ -1,31 +1,18 @@
 import { Injectable } from '@angular/core';
 import {Individual} from "../model/individual";
 import {HttpClient} from "@angular/common/http";
+import {first, Observable, take, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TarefasService {
-
-  constructor( httpCliente:HttpClient) { }
-  list(): Individual[]{
-    return [
-      {
-        _id: 1,
-        titulo: 'Hydrogen',
-        tempo: "tenpo",
-        data: 'H',
-        desc: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
-      },
-      {
-        _id: 1,
-        titulo: 'Hydrogen',
-        tempo: "tenpo",
-        data: 'H',
-        desc: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
-      }
-    ];
+  private API_URL = 'assets/tarefas.json';
+  constructor( private httpCliente:HttpClient) { }
+  list(): Observable<Individual[]>{
+    return this.httpCliente.get<Individual[]>(this.API_URL).pipe(
+      take(1),
+      tap(tarefas => console.log(tarefas))
+    );
   }
 }
