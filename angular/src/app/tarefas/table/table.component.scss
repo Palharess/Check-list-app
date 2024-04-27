@@ -38,3 +38,11 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
+.carregando{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgrey;
+  padding: 25px;
+}

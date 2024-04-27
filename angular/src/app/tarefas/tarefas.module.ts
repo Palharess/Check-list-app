@@ -7,6 +7,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIcon} from "@angular/material/icon";
 import {TableExpandableRowsExample} from "./table/table.component";
 import {MatCardModule} from '@angular/material/card';
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {MatCardModule} from '@angular/material/card';
     MatIcon,
     TableExpandableRowsExample,
     MatCardModule,
+    SharedModule
   ]
 })
 export class TarefasModule { }

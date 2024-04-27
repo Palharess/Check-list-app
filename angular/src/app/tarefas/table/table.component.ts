@@ -6,7 +6,11 @@ import {MatTableModule} from '@angular/material/table';
 import {Individual} from "../model/individual";
 import {MatToolbar} from "@angular/material/toolbar";
 import {TarefasService} from "../services/tarefas.service";
-import {Observable} from "rxjs";
+import {catchError, Observable, of} from "rxjs";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {MatDialog} from "@angular/material/dialog";
+import {ErrorPopComponent} from "../../shared/componentes/error-pop/error-pop.component";
 
 
 
@@ -25,16 +29,31 @@ import {Observable} from "rxjs";
     ]),
   ],
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIconModule, MatToolbar],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, MatToolbar, AsyncPipe, NgIf, MatProgressSpinner],
 })
 export class TableExpandableRowsExample {
-  dataSource:Observable<Individual[]>;
-  constructor(private tarefasService: TarefasService){
-
-
-    this.dataSource = this.tarefasService.list();
+  dataSource$:Observable<Individual[]>;
+  constructor(private tarefasService: TarefasService,
+              public dialog: MatDialog
+  ){
+    this.dataSource$ = this.tarefasService.list().pipe(
+      catchError(err => {
+        this.error("Erro ao buscar tarefas.");
+        console.log('Error fetching data', err);
+        return of([]);
+      })
+    );
   }
-  columnsToDisplay = ['titulo', 'data', 'tempo'];
+
+  error(msg: string) {
+    this.dialog.open(ErrorPopComponent, {
+      data: msg
+    });
+  }
+
+
+
+  columnsToDisplay = ['titulo', 'data', 'tempo', '_id'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Individual | null = null;
 }
