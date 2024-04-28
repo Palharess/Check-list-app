@@ -5,12 +5,32 @@
        [dataSource]="dataSource" multiTemplateDataRows
        class="mat-elevation-z8">
   @for (column of columnsToDisplay; track column) {
-    <ng-container matColumnDef="{{column}}">
-      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-    </ng-container>
+    @if(column != 'add') {
+      <ng-container matColumnDef="{{column}}">
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      </ng-container>
+    } @else {
+      <ng-container matColumnDef="add">
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;
+          <button mat-mini-fab aria-label="add row" color="primary">
+            <mat-icon>add</mat-icon>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button class="b-edit" mat-mini-fab aria-label="edit" color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button  mat-mini-fab aria-label="delete" color="primary">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+    }
   }
-  
+
+
   <ng-container matColumnDef="expand">
     <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
     <td mat-cell *matCellDef="let element">
@@ -24,6 +44,7 @@
     </td>
   </ng-container>
 
+
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
@@ -31,12 +52,13 @@
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
         <div class="example-element-description">
-          {{element.desc}}
+          {{element.description}}
           <span class="example-element-description-attribution"> </span>
         </div>
       </div>
     </td>
   </ng-container>
+
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
   <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
