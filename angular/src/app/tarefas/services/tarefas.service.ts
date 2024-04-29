@@ -15,6 +15,6 @@ export class TarefasService {
     );
   }
   persist(tarefa: Individual){
-    return this.httpCliente.post(this.API_URL, this.API_URL);
+    return this.httpCliente.post<Individual>(this.API_URL, tarefa)
   }
 }

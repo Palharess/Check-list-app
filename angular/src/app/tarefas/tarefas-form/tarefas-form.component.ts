@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TarefasService} from "../services/tarefas.service";
+import {first} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-tarefas-form',
@@ -11,19 +13,27 @@ export class TarefasFormComponent {
 
   formu: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private tarefasService: TarefasService) {
+  constructor(private formBuilder: FormBuilder, private tarefasService: TarefasService, private snackbar: MatSnackBar) {
     this.formu = formBuilder.group(
       {
-        titulo: [''],
-        description: [''],
-        data: [''],
-        tempo: ['']
+        titulo: ['', Validators.required],
+        description: ['', Validators.required],
+        data: ['',Validators.required],
+        tempo: ['',Validators.required]
       }
     );
   }
-  onCriar(){
-    console.log(this.formu.value);
-}
+  onCriar() {
+    this.tarefasService.persist(this.formu.value).subscribe(
+      result => console.log(result),
+      error => {
+        this.snackbar.open('Error: ' + error.error.message, 'Close', {
+          duration: 3000,
+        });
+      }
+    )
+  }
+
   onVoltar(){
     console.log(this.formu.value);
   }
