@@ -12,8 +12,9 @@ export class TarefasService {
   list(): Observable<Individual[]>{
     return this.httpCliente.get<Individual[]>(this.API_URL).pipe(
       first(),
-
-      tap(tarefas => console.log(tarefas))
     );
+  }
+  persist(tarefa: Individual){
+    return this.httpCliente.post(this.API_URL, this.API_URL);
   }
 }

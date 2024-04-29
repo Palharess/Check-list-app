@@ -53,7 +53,7 @@ export class TableExpandableRowsExample {
 
 
 
-  columnsToDisplay = ['titulo', 'data', 'tempo', 'add'];
+  columnsToDisplay = ['titulo', 'data', 'tempo'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Individual | null = null;
 }

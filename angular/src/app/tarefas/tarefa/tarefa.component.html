@@ -1,7 +1,19 @@
 
 
 <mat-card>
-  <mat-toolbar color="primary">Tarefas Disponíveis</mat-toolbar>
+  <mat-toolbar color="primary">Tarefas Disponíveis
+    <div class="crud">
+      <button mat-mini-fab aria-label="add row" color="primary" (click)="onAdd()" >
+        <mat-icon>add</mat-icon>
+      </button>
+      <button class="b-edit" mat-mini-fab aria-label="edit" color="primary">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button  mat-mini-fab aria-label="delete" color="primary">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
 
     <app-table></app-table>
 </mat-card>

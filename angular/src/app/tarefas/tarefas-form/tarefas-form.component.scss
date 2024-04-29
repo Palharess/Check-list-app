@@ -1,0 +1,38 @@
+.f-width{
+  width: 100%;
+}
+.d-card{
+  max-width: 70%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  border-color: black;
+  border-width: 0.1rem;
+  margin-top: 5rem;
+}
+
+
+.titulo{
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.min{
+  width: 100%;
+  min-width: 200px;
+}
+
+.btn{
+  width: 10rem;
+  height: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
