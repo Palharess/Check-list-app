@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -6,7 +6,7 @@ import {MatTableModule} from '@angular/material/table';
 import {Individual} from "../model/individual";
 import {MatToolbar} from "@angular/material/toolbar";
 import {TarefasService} from "../services/tarefas.service";
-import {catchError, Observable, of} from "rxjs";
+import {catchError, Observable, of, tap} from "rxjs";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatDialog} from "@angular/material/dialog";
@@ -32,6 +32,7 @@ import {ErrorPopComponent} from "../../shared/componentes/error-pop/error-pop.co
   imports: [MatTableModule, MatButtonModule, MatIconModule, MatToolbar, AsyncPipe, NgIf, MatProgressSpinner],
 })
 export class TableExpandableRowsExample {
+  @Output() dataLoader = new EventEmitter<Individual[]>();
   dataSource$:Observable<Individual[]>;
   constructor(private tarefasService: TarefasService,
               public dialog: MatDialog
@@ -41,9 +42,13 @@ export class TableExpandableRowsExample {
         this.error("Erro ao buscar tarefas.");
         console.log('Error fetching data', err);
         return of([]);
-      })
+      }),
+    tap(data => this.dataLoader.emit(data))
     );
+
   }
+
+
 
   error(msg: string) {
     this.dialog.open(ErrorPopComponent, {
@@ -53,7 +58,7 @@ export class TableExpandableRowsExample {
 
 
 
-  columnsToDisplay = ['titulo', 'data', 'tempo'];
+  columnsToDisplay = ['_id','titulo', 'data', 'tempo' ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Individual | null = null;
 }

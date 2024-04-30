@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {Individual} from "../model/individual";
 
 
 @Component({
@@ -8,7 +9,8 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrl: './tarefa.component.scss'
 })
 export class TarefaComponent implements OnInit{
-
+  data: Individual[] = [];
+  show = false;
   private router: Router;
   private route: ActivatedRoute;
   constructor(router: Router, route: ActivatedRoute) {
@@ -22,8 +24,12 @@ export class TarefaComponent implements OnInit{
     this.router.navigate(['create'] ,{relativeTo: this.route});
   }
 
-  onEdit(){
+  onDataLoaded(data: Individual[]){
+    this.data = data;
+  }
 
+  onEdit(){
+    prompt
   }
 }
 

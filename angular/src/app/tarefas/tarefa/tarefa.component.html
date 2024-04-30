@@ -15,5 +15,11 @@
     </div>
   </mat-toolbar>
 
-    <app-table></app-table>
+    <app-table (dataLoader)="onDataLoaded($event)"></app-table>
+
+
+
 </mat-card>
+
+
+
