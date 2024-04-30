@@ -19,6 +19,8 @@ public class TarefaController {
 
 
     //pega as tarefas do banco de dados para fazer o display no /tarefas
+
+
     @GetMapping
     public List<Tarefa> list() {
         Iterable<Tarefa> it = tarefaRepository.findAll();
@@ -39,7 +41,8 @@ public class TarefaController {
     @PostMapping
     public Tarefa criar(@RequestBody Tarefa tarefa) {
         if (tarefa.getTitulo().isEmpty() || tarefa.getDescription().isEmpty() || tarefa.getData().isEmpty() || tarefa.getTempo().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Faltam dados obrigatórios");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fields cannot be empty");
+
         }
         return tarefaRepository.save(tarefa);
     }
