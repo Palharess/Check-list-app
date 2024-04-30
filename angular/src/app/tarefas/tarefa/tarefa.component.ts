@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Individual} from "../model/individual";
 import {EditService} from "../services/edit.service";
 import {TableExpandableRowsExample} from "../table/table.component";
+import {DialogComponent} from "../../shared/componentes/dialog/dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -14,7 +16,7 @@ export class TarefaComponent implements OnInit{
   data: Individual[] = [];
   private router: Router;
   private route: ActivatedRoute;
-  constructor(router: Router, route: ActivatedRoute, private editService: EditService) {
+  constructor(router: Router, route: ActivatedRoute, private editService: EditService, public dialog: MatDialog,) {
     this.router = router;
     this.route = route;
   }
@@ -32,6 +34,7 @@ export class TarefaComponent implements OnInit{
   onEdit(){
     this.editService.changeEditStatus(true);
     this.editService.setEditButtonClicked(true);
+    this.dialog.open(DialogComponent, { data: "Clique no elemento que você deseja editar" });
   }
 }
 

@@ -3,7 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TarefasService} from "../services/tarefas.service";
 import {first} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {EditService} from "../services/edit.service";
+import {Individual} from "../model/individual";
 
 @Component({
   selector: 'app-tarefas-form',
@@ -11,12 +13,12 @@ import {Router} from "@angular/router";
   styleUrl: './tarefas-form.component.scss'
 })
 export class TarefasFormComponent {
-
+  edit: boolean = false;
   formu: FormGroup;
   router : Router
 
-  constructor(private formBuilder: FormBuilder, private tarefasService: TarefasService, private snackbar: MatSnackBar
-    , router: Router) {
+  constructor(private formBuilder: FormBuilder, private tarefasService: TarefasService, private snackbar: MatSnackBar, private editService: EditService
+    , router: Router,  private route: ActivatedRoute) {
     this.formu = formBuilder.group(
       {
         titulo: ['', Validators.required],
@@ -26,6 +28,20 @@ export class TarefasFormComponent {
       }
     );
     this.router = router;
+    editService.currentEditStatus.subscribe(editStatus => this.edit = editStatus);
+
+    this.route.paramMap.subscribe(params => {
+      let navigation = this.router.getCurrentNavigation();
+      if (navigation && navigation.extras.state) {
+        let state = navigation.extras.state as {data: Individual};
+        this.formu.setValue({
+          titulo: state.data.titulo,
+          description: state.data.description,
+          data: state.data.data,
+          tempo: state.data.tempo
+        });
+      }
+    });
   }
   onCriar() {
     this.tarefasService.persist(this.formu.value).subscribe(
@@ -43,6 +59,7 @@ export class TarefasFormComponent {
   }
 
   onVoltar(){
+    this.editService.changeEditStatus(false);
     this.router.navigate(['/tarefas'])
   }
 

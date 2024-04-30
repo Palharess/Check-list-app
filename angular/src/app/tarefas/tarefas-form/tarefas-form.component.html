@@ -5,8 +5,14 @@
 
 <mat-card class="d-card min">
   <mat-card-header>
+    @if(!edit){
+
     <mat-card-title class="titulo">Adicionar Nova Atividade</mat-card-title>
+    }@else{
+      <mat-card-title class="titulo">Editar Atividade</mat-card-title>
+    }
   </mat-card-header>
+
   <mat-card-content>
 
 
@@ -33,7 +39,12 @@
   </form>
   </mat-card-content>
   <mat-card-actions style="gap: 1.5rem">
-    <button class="btn" mat-flat-button color="primary" (click)="onCriar()">CRIAR</button>
+    @if(!edit){
+      <button class="btn" mat-flat-button color="primary" (click)="onCriar()">CRIAR</button>
+    } @else {
+      <button class="btn" mat-flat-button color="primary" (click)="onCriar()">EDITAR</button>
+    }
+
     <button class="btn" mat-flat-button color="primary" (click)="onVoltar()">VOLTAR </button>
   </mat-card-actions>
 </mat-card>

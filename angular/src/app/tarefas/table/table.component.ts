@@ -13,6 +13,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {ErrorPopComponent} from "../../shared/componentes/error-pop/error-pop.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EditService} from "../services/edit.service";
+import {DialogComponent} from "../../shared/componentes/dialog/dialog.component";
+
 
 
 
@@ -39,7 +41,8 @@ export class TableExpandableRowsExample {
   @Output() dataLoader = new EventEmitter<Individual[]>();
   dataSource$:Observable<Individual[]>;
   constructor(private tarefasService: TarefasService,
-              public dialog: MatDialog, private router: Router, private editService: EditService, route: ActivatedRoute
+              public dialog: MatDialog, private router: Router, private editService: EditService,
+              route: ActivatedRoute
   ){
     this.dataSource$ = this.tarefasService.list().pipe(
       catchError(err => {
@@ -68,7 +71,7 @@ export class TableExpandableRowsExample {
   }
 
   navigateToEditPage(element: Individual) {
-
+    this.editService.changeEditStatus(true);
     this.router.navigate(['edit'], {state: {data: element},relativeTo: this.route});
 
   }

@@ -9,7 +9,7 @@ export class EditService {
   currentEditStatus = this.editSource.asObservable();
 
   changeEditStatus(status: boolean) {
-    this.editSource.next(true);
+    this.editSource.next(status);
   }
 
   private editButtonClickedSource = new BehaviorSubject<boolean>(false);
