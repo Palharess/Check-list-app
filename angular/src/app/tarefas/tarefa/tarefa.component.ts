@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Individual} from "../model/individual";
+import {EditService} from "../services/edit.service";
+import {TableExpandableRowsExample} from "../table/table.component";
 
 
 @Component({
@@ -10,10 +12,9 @@ import {Individual} from "../model/individual";
 })
 export class TarefaComponent implements OnInit{
   data: Individual[] = [];
-  show = false;
   private router: Router;
   private route: ActivatedRoute;
-  constructor(router: Router, route: ActivatedRoute) {
+  constructor(router: Router, route: ActivatedRoute, private editService: EditService) {
     this.router = router;
     this.route = route;
   }
@@ -29,7 +30,8 @@ export class TarefaComponent implements OnInit{
   }
 
   onEdit(){
-    prompt
+    this.editService.changeEditStatus(true);
+    this.editService.setEditButtonClicked(true);
   }
 }
 

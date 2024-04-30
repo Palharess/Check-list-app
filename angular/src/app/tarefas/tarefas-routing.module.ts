@@ -5,7 +5,8 @@ import {TarefasFormComponent} from "./tarefas-form/tarefas-form.component";
 
 const routes: Routes = [
   {path: '', component:TarefaComponent},
-  {path: 'create', component:TarefasFormComponent}
+  {path: 'create', component:TarefasFormComponent},
+  {path: 'edit', component:TarefasFormComponent}
 ];
 
 @NgModule({

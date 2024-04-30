@@ -11,6 +11,8 @@ import {AsyncPipe, NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorPopComponent} from "../../shared/componentes/error-pop/error-pop.component";
+import {Router} from "@angular/router";
+import {EditService} from "../services/edit.service";
 
 
 
@@ -32,10 +34,11 @@ import {ErrorPopComponent} from "../../shared/componentes/error-pop/error-pop.co
   imports: [MatTableModule, MatButtonModule, MatIconModule, MatToolbar, AsyncPipe, NgIf, MatProgressSpinner],
 })
 export class TableExpandableRowsExample {
+  edit_button_clicked: boolean = false;
   @Output() dataLoader = new EventEmitter<Individual[]>();
   dataSource$:Observable<Individual[]>;
   constructor(private tarefasService: TarefasService,
-              public dialog: MatDialog
+              public dialog: MatDialog, private router: Router, private editService: EditService
   ){
     this.dataSource$ = this.tarefasService.list().pipe(
       catchError(err => {
@@ -45,7 +48,13 @@ export class TableExpandableRowsExample {
       }),
     tap(data => this.dataLoader.emit(data))
     );
-
+    this.editService.currentEditStatus.subscribe(editStatus => this.edit_button_clicked = editStatus);
+    this.editService.editButtonClickedStatus.subscribe(status => {
+      if (status) {
+        this.expandedElement = null;
+        this.editService.setEditButtonClicked(false); // reset the flag
+      }
+    });
   }
 
 
@@ -56,7 +65,11 @@ export class TableExpandableRowsExample {
     });
   }
 
+  navigateToEditPage(element: Individual) {
+    
+    this.router.navigate(['edit'], {state: {data: element}});
 
+  }
 
   columnsToDisplay = ['_id','titulo', 'data', 'tempo' ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
