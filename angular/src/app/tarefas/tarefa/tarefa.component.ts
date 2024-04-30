@@ -21,4 +21,9 @@ export class TarefaComponent implements OnInit{
   onAdd(){
     this.router.navigate(['create'] ,{relativeTo: this.route});
   }
+
+  onEdit(){
+
+  }
 }
+
