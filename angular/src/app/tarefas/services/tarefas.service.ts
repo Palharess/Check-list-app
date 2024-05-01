@@ -17,4 +17,8 @@ export class TarefasService {
   persist(tarefa: Individual){
     return this.httpCliente.post<Individual>(this.API_URL, tarefa)
   }
+  edit(tarefa: Individual){
+    console.log(tarefa.data);
+    return this.httpCliente.put<Individual>(`${this.API_URL}/${tarefa._id}`, tarefa)
+  }
 }

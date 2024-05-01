@@ -13,6 +13,7 @@ import {Individual} from "../model/individual";
   styleUrl: './tarefas-form.component.scss'
 })
 export class TarefasFormComponent {
+  id: number | undefined;
   edit: boolean = false;
   formu: FormGroup;
   router : Router
@@ -21,6 +22,7 @@ export class TarefasFormComponent {
     , router: Router,  private route: ActivatedRoute) {
     this.formu = formBuilder.group(
       {
+        id: [''],
         titulo: ['', Validators.required],
         description: ['', Validators.required],
         data: ['',Validators.required],
@@ -34,7 +36,9 @@ export class TarefasFormComponent {
       let navigation = this.router.getCurrentNavigation();
       if (navigation && navigation.extras.state) {
         let state = navigation.extras.state as {data: Individual};
+        this.id = state.data._id;
         this.formu.setValue({
+          id: state.data._id,
           titulo: state.data.titulo,
           description: state.data.description,
           data: state.data.data,
@@ -43,7 +47,9 @@ export class TarefasFormComponent {
       }
     });
   }
+
   onCriar() {
+    if(!this.edit){
     this.tarefasService.persist(this.formu.value).subscribe(
       result =>   {
         this.snackbar.open("Curso salvo!", 'Close', {
@@ -55,7 +61,23 @@ export class TarefasFormComponent {
           duration: 3000,
         });
       }
-    )
+    )}
+    else{
+      this.formu.value._id = this.id
+      this.tarefasService.edit(this.formu.value).subscribe(
+        result =>   {
+          this.snackbar.open("Curso editado!", 'Close', {
+            duration: 3000,});
+          this.router.navigate(['/tarefas']);
+        },
+        error => {
+          this.snackbar.open('Error: ' + error.error.message, 'Close', {
+            duration: 3000,
+          });
+        }
+      )
+    }
+    this.editService.changeEditStatus(false);
   }
 
   onVoltar(){

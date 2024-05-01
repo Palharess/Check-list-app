@@ -46,4 +46,22 @@ public class TarefaController {
         }
         return tarefaRepository.save(tarefa);
     }
+    @PutMapping("{id}")
+    public Tarefa editar(@PathVariable int id,@RequestBody Tarefa tarefa) {
+        if (tarefa.getTitulo().isEmpty() || tarefa.getDescription().isEmpty() || tarefa.getData().isEmpty() || tarefa.getTempo().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fields cannot be empty");
+
+        }
+
+        return tarefaRepository.findById(id)
+                .map(existingTarefa -> {
+                    existingTarefa.setTitulo(tarefa.getTitulo());
+                    existingTarefa.setDescription(tarefa.getDescription());
+                    existingTarefa.setData(tarefa.getData());
+                    existingTarefa.setTempo(tarefa.getTempo());
+                    return tarefaRepository.save(existingTarefa);
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa not found"));
+
+    }
 }

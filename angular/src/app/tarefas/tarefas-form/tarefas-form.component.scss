@@ -36,3 +36,10 @@
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
+
+@media (max-width: 600px){
+  .btn{
+    width: 7rem;
+
+  }
+}
