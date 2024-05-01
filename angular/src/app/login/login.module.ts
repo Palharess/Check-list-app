@@ -10,11 +10,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIcon} from "@angular/material/icon";
 import {MatDivider} from "@angular/material/divider";
 import {MatButtonModule} from '@angular/material/button';
+import {ReactiveFormsModule} from "@angular/forms";
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
   declarations: [
-    LpageComponent
+    LpageComponent,
+    RegisterComponent
   ],
     imports: [
         CommonModule,
@@ -25,7 +28,8 @@ import {MatButtonModule} from '@angular/material/button';
         MatSelectModule,
         MatIcon,
         MatDivider,
-        MatButtonModule
+        MatButtonModule,
+        ReactiveFormsModule
     ]
 })
 export class LoginModule { }
