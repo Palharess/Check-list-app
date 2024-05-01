@@ -4,6 +4,7 @@ import { ErrorPopComponent } from './componentes/error-pop/error-pop.component';
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import { DialogComponent } from './componentes/dialog/dialog.component';
+import {DeleteDialogComponent} from "./componentes/delete-dialog/delete-dialog.component";
 
 
 
@@ -12,6 +13,7 @@ import { DialogComponent } from './componentes/dialog/dialog.component';
   declarations: [
     ErrorPopComponent,
     DialogComponent,
+    DeleteDialogComponent
 
   ],
   imports: [
@@ -22,7 +24,7 @@ import { DialogComponent } from './componentes/dialog/dialog.component';
     MatDialogTitle,
     MatDialogActions
   ],
-  exports: [ErrorPopComponent, DialogComponent]
+  exports: [ErrorPopComponent, DialogComponent, DeleteDialogComponent]
 })
 
 export class SharedModule { }

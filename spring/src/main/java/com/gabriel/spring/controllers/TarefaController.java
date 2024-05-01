@@ -64,4 +64,10 @@ public class TarefaController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa not found"));
 
     }
+    @DeleteMapping("{id}")
+    public Tarefa deletar(@PathVariable int id) {
+        Tarefa tarefa = tarefaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        tarefaRepository.delete(tarefa);
+        return tarefa;
+    }
 }

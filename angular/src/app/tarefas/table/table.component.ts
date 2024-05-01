@@ -14,6 +14,8 @@ import {ErrorPopComponent} from "../../shared/componentes/error-pop/error-pop.co
 import {ActivatedRoute, Router} from "@angular/router";
 import {EditService} from "../services/edit.service";
 import {DialogComponent} from "../../shared/componentes/dialog/dialog.component";
+import {DeleteService} from "../services/delete.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 
@@ -38,11 +40,14 @@ import {DialogComponent} from "../../shared/componentes/dialog/dialog.component"
 export class TableExpandableRowsExample {
   private route: ActivatedRoute;
   edit_button_clicked: boolean = false;
+  delete_button_clicked: boolean = false;
+
   @Output() dataLoader = new EventEmitter<Individual[]>();
   dataSource$:Observable<Individual[]>;
+
   constructor(private tarefasService: TarefasService,
               public dialog: MatDialog, private router: Router, private editService: EditService,
-              route: ActivatedRoute
+              route: ActivatedRoute, private deleteService: DeleteService, private snackbar: MatSnackBar
   ){
     this.dataSource$ = this.tarefasService.list().pipe(
       catchError(err => {
@@ -52,13 +57,25 @@ export class TableExpandableRowsExample {
       }),
     tap(data => this.dataLoader.emit(data))
     );
+    //pegar o dado do service e mudar a função do botao
     this.editService.currentEditStatus.subscribe(editStatus => this.edit_button_clicked = editStatus);
+
     this.editService.editButtonClickedStatus.subscribe(status => {
       if (status) {
         this.expandedElement = null;
         this.editService.setEditButtonClicked(false); // reset the flag
       }
     });
+
+    //mesma coisa só q para o delete
+    this.deleteService.currentDeleteStatus.subscribe(deleteStatus => this.delete_button_clicked = deleteStatus);
+    this.deleteService.deleteButtonClickedStatus.subscribe(status => {
+      if (status) {
+        this.expandedElement = null;
+        this.deleteService.setDeleteButtonClicked(false); // reset the flag
+      }
+    });
+
     this.route = route;
   }
 
@@ -76,7 +93,24 @@ export class TableExpandableRowsExample {
 
   }
 
-  columnsToDisplay = ['_id','titulo', 'data', 'tempo' ];
+  deleteTarefa(element: Individual){
+    this.tarefasService.delete(element).subscribe(result => {
+      this.router.navigate(['/tarefas']).then(() => {
+          window.location.reload()}).then(() => {
+            setTimeout(() => {this.snackbar.open("Curso deletado!", 'Close', {duration: 3000,});}, 1000);
+
+      });
+    } , error => {
+      this.snackbar.open('Error: ' + error.error.message, 'Close', {
+        duration: 3000,
+      });
+    }
+    );
+    this.deleteService.changeDeleteStatus(false);
+
+  }
+
+  columnsToDisplay = ['titulo', 'data', 'tempo' ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Individual | null = null;
 }
